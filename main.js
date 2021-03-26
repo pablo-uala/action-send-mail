@@ -44,6 +44,7 @@ async function main() {
         const contentType = core.getInput("content_type", { required: true })
         const attachments = core.getInput("attachments", { required: false })
         const convertMarkdown = core.getInput("convert_markdown", { required: false })
+        const ignoreCert = core.getInput("ignore_cert", { required: false })
 
         const transport = nodemailer.createTransport({
             host: serverAddress,
@@ -54,6 +55,10 @@ async function main() {
                 pass: password,
             }
         })
+
+        if (ignoreCert) {
+            transport.tls.rejectUnauthorized = false
+        }
 
         const info = await transport.sendMail({
             from: getFrom(from, username),
