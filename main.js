@@ -53,6 +53,10 @@ async function main() {
             auth: {
                 user: username,
                 pass: password,
+            },
+            tls: {
+                // fail on invalid certs by default
+                rejectUnauthorized: true
             }
         })
 
